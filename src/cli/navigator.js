@@ -3,7 +3,7 @@ import FileNodeList from "../components/commands/FileNodeList";
 const navigateTo = (path) => {};
 
 const pwd = () => {
-  return localStorage.getItem("context") || "~";
+  return localStorage.getItem("context") || "root";
 };
 
 const list = () => {
@@ -22,7 +22,7 @@ const list = () => {
 export { pwd, navigateTo, list };
 
 const FILE_TREE = {
-  "~": {
+  root: {
     blog: {
       "blog-post.md": "blog post",
     },
