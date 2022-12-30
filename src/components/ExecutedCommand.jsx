@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
-import CommandCanvas from "./CommandCanvas";
+import CommandTextRenderer from "./CommandTextRenderer";
 
 const Result = styled.div`
   padding-left: 10px;
@@ -15,7 +15,7 @@ export default function ExecutedCommand({ commandString, result }) {
 
   return (
     <li ref={liRef}>
-      <CommandCanvas commandString={commandString} />
+      <CommandTextRenderer commandString={commandString} />
       <Result className="result" />
     </li>
   );

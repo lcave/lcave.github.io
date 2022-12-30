@@ -4,7 +4,7 @@ import {
   executeCommand,
   getCommandHistory,
 } from "../interpreter/commandInterpreter";
-import CommandCanvas from "./CommandCanvas";
+import CommandTextRenderer from "./CommandTextRenderer";
 import CommandHistory from "./CommandHistory";
 import Input from "./Input";
 
@@ -13,7 +13,8 @@ const CLBorder = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column-reverse;
-  padding: 0 5px;
+  padding: 5px 5px;
+  overflow-y: scroll;
 `;
 
 export default function CommandLine() {
@@ -40,7 +41,7 @@ export default function CommandLine() {
         changeInputValueCallback={handleInputChange}
         executeCommandCallback={handleCommandExecution}
       />
-      <CommandCanvas commandString={inputString} showCaret />
+      <CommandTextRenderer commandString={inputString} showCaret />
       <CommandHistory commandHistory={commandHistory} />
     </CLBorder>
   );
