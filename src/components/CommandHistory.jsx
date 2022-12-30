@@ -1,16 +1,22 @@
-import React from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
+import ExecutedCommand from "./ExecutedCommand";
 
 const List = styled.ul`
   color: green;
   list-style: none;
+  margin: 0;
 `;
 
 export default function CommandHistory({ commandHistory }) {
   return (
     <List>
-      {commandHistory.map((c) => (
-        <li>{c}</li>
+      {commandHistory.map((c, index) => (
+        <ExecutedCommand
+          key={index}
+          commandString={c.commandString}
+          result={c.result}
+        />
       ))}
     </List>
   );

@@ -1,5 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import {
+  executeCommand,
+  getCommandHistory,
+} from "../interpreter/commandInterpreter";
 import CommandHistory from "./CommandHistory";
 import CurrentInput from "./CurrentInput";
 import Input from "./Input";
@@ -15,13 +19,16 @@ export default function CommandLine() {
   const [inputString, setInputString] = useState("");
   const [commandHistory, setCommandHistory] = useState([]);
 
+  useEffect(() => {
+    setCommandHistory(getCommandHistory());
+  }, []);
+
   const handleInputChange = (e) => {
     setInputString(e);
   };
 
-  const executeCommand = (commandString) => {
-    const newHistory = [...commandHistory, commandString];
-    setCommandHistory(newHistory);
+  const handleCommandExecution = (commandString) => {
+    setCommandHistory(executeCommand(commandString));
     setInputString("");
   };
 
@@ -30,7 +37,7 @@ export default function CommandLine() {
       <Input
         inputValue={inputString}
         changeInputValueCallback={handleInputChange}
-        executeCommandCallback={executeCommand}
+        executeCommandCallback={handleCommandExecution}
       />
       <CurrentInput inputString={inputString} />
       <CommandHistory commandHistory={commandHistory} />
