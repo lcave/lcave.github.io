@@ -1,35 +1,22 @@
-import React, { useEffect, useRef, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React from "react";
 import styled from "styled-components";
+import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { pwd } from "../cli/navigator";
 
 const Command = styled.div`
-  font-family: monospace;
-  font-size: 1.5rem;
   height: 1.8rem;
-  color: green;
 `;
 
-const Caret = styled.div`
-  width: 0.75rem;
-  height: auto;
-  background: green;
-  display: inline;
-  &.invisible {
-    opacity: 0;
-  }
-`;
-
-const Wrapper = styled.div`
-  display: flex;
-`;
-
-export default function CommandTextRenderer({
-  commandString,
-  showCaret = false,
-}) {
+export default function CommandTextRenderer({ commandString }) {
+  const context = pwd();
   return (
-    <Wrapper>
-      <Command>{commandString}</Command>
-      {showCaret && <Caret />}
-    </Wrapper>
+    <Command>
+      {context}
+      &nbsp;
+      <FontAwesomeIcon icon={faChevronRight} fontSize="80%" />
+      &nbsp;
+      {commandString}
+    </Command>
   );
 }

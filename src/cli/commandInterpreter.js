@@ -1,5 +1,5 @@
 import * as ReactDOMServer from "react-dom/server";
-import TestCommand from "../components/commands/TestCommand";
+import { list } from "./navigator";
 
 const executeCommand = (commandString) => {
   if (!commandString) return getCommandHistory();
@@ -22,18 +22,24 @@ const getCommandHistory = () => {
   return JSON.parse(localStorage.getItem("commandHistory")) || [];
 };
 
-export { executeCommand, getCommandHistory };
+export { executeCommand, getCommandHistory, pushCommandToHistory };
 
 const COMMANDS = {
   clear() {
     localStorage.setItem("commandHistory", null);
   },
+  ls() {
+    return list();
+  },
 };
 
 const interpretCommand = (commandString) => {
-  typeof COMMANDS[commandString] === "function"
-    ? COMMANDS[commandString]()
-    : pushCommandToHistory("command not found: " + commandString, null);
+  if (typeof COMMANDS[commandString] === "function") {
+    const result = COMMANDS[commandString]();
+    if (result) pushCommandToHistory(commandString, renderResult(result));
+  } else {
+    pushCommandToHistory("command not found: " + commandString, null);
+  }
 };
 
 const renderResult = (component) => {

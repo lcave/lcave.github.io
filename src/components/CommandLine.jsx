@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import {
-  executeCommand,
-  getCommandHistory,
-} from "../interpreter/commandInterpreter";
-import CommandTextRenderer from "./CommandTextRenderer";
+import { executeCommand, getCommandHistory } from "../cli/commandInterpreter";
 import CommandHistory from "./CommandHistory";
 import Input from "./Input";
+import CommandInput from "./CommandInput";
 
 const CLBorder = styled.div`
   border: 3px dashed green;
@@ -15,6 +12,18 @@ const CLBorder = styled.div`
   flex-direction: column-reverse;
   padding: 5px 5px;
   overflow-y: scroll;
+`;
+
+const MachineName = styled.div`
+  top: -0.9rem;
+  left: 1.5rem;
+  position: relative;
+  max-height: 0;
+  overflow: visible;
+  span {
+    padding: 0 5px;
+    background-color: black;
+  }
 `;
 
 export default function CommandLine() {
@@ -35,14 +44,19 @@ export default function CommandLine() {
   };
 
   return (
-    <CLBorder>
-      <Input
-        inputValue={inputString}
-        changeInputValueCallback={handleInputChange}
-        executeCommandCallback={handleCommandExecution}
-      />
-      <CommandTextRenderer commandString={inputString} showCaret />
-      <CommandHistory commandHistory={commandHistory} />
-    </CLBorder>
+    <>
+      <MachineName>
+        <span>portfolio@Luca-Cave</span>
+      </MachineName>
+      <CLBorder>
+        <Input
+          inputValue={inputString}
+          changeInputValueCallback={handleInputChange}
+          executeCommandCallback={handleCommandExecution}
+        />
+        <CommandInput commandString={inputString} />
+        <CommandHistory commandHistory={commandHistory} />
+      </CLBorder>
+    </>
   );
 }
