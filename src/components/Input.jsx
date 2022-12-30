@@ -7,16 +7,28 @@ const InputElement = styled.input`
   position: absolute;
 `;
 
-export default function Input({ changeInputValueCallback }) {
+export default function Input({
+  inputValue,
+  changeInputValueCallback,
+  executeCommandCallback,
+}) {
   const handleKeyPress = (e) => {
     changeInputValueCallback(e.target.value);
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    executeCommandCallback(e.target.querySelector("input").value);
+  };
+
   return (
-    <InputElement
-      autoFocus
-      onBlur={(e) => e.currentTarget.focus()}
-      onChange={handleKeyPress}
-    />
+    <form onSubmit={handleSubmit}>
+      <InputElement
+        autoFocus
+        value={inputValue}
+        onBlur={(e) => e.currentTarget.focus()}
+        onChange={handleKeyPress}
+      />
+    </form>
   );
 }
