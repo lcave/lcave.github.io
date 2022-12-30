@@ -1,4 +1,10 @@
 import React, { useEffect, useRef } from "react";
+import styled from "styled-components";
+import CommandCanvas from "./CommandCanvas";
+
+const Result = styled.div`
+  padding-left: 10px;
+`;
 
 export default function ExecutedCommand({ commandString, result }) {
   const liRef = useRef(null);
@@ -9,8 +15,8 @@ export default function ExecutedCommand({ commandString, result }) {
 
   return (
     <li ref={liRef}>
-      <div>{commandString}</div>
-      <div className="result"></div>
+      <CommandCanvas commandString={commandString} />
+      <Result className="result" />
     </li>
   );
 }
