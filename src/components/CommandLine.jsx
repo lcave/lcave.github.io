@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { executeCommand, getCommandHistory } from "../cli/commandInterpreter";
 import CommandHistory from "./CommandHistory";
 import Input from "./Input";
-import CommandInput from "./CommandInput";
+import CommandTextRenderer from "./CommandTextRenderer";
 
 const CLBorder = styled.div`
   border: 3px dashed green;
@@ -12,6 +12,7 @@ const CLBorder = styled.div`
   flex-direction: column-reverse;
   padding: 5px 5px;
   overflow-y: scroll;
+  overflow-x: hidden;
 `;
 
 const MachineName = styled.div`
@@ -54,7 +55,7 @@ export default function CommandLine() {
           changeInputValueCallback={handleInputChange}
           executeCommandCallback={handleCommandExecution}
         />
-        <CommandInput commandString={inputString} />
+        <CommandTextRenderer commandString={inputString} showCaret />
         <CommandHistory commandHistory={commandHistory} />
       </CLBorder>
     </>

@@ -5,18 +5,30 @@ import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { pwd } from "../cli/navigator";
 
 const Command = styled.div`
-  height: 1.8rem;
+  white-space: break-spaces;
+  overflow-wrap: break-word;
+  width: 100%;
 `;
 
-export default function CommandTextRenderer({ commandString }) {
+const Context = styled.span`
+  white-space: nowrap;
+`;
+
+export default function CommandTextRenderer({
+  commandString,
+  showCaret = false,
+}) {
   const context = pwd();
   return (
     <Command>
-      {context}
-      &nbsp;
-      <FontAwesomeIcon icon={faChevronRight} fontSize="80%" />
-      &nbsp;
+      <Context>
+        {context}
+        &nbsp;
+        <FontAwesomeIcon icon={faChevronRight} fontSize="80%" />
+        &nbsp;
+      </Context>
       {commandString}
+      {showCaret && "█"}
     </Command>
   );
 }
