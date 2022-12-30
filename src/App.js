@@ -1,7 +1,12 @@
+import Backdrop from "./components/Backdrop";
+import CommandLine from "./components/CommandLine";
+import "./App.css"
+
 function App() {
   return (
-    <div className="App">
-    </div>
+    <Backdrop>
+      <CommandLine />
+    </Backdrop>
   );
 }
 
