@@ -1,10 +1,11 @@
 import * as ReactDOMServer from "react-dom/server";
-import { list } from "./navigator";
+import Cat from "../components/commands/Cat";
+import { list, pwd } from "./navigator";
 
-const executeCommand = (commandString) => {
-  if (!commandString) return getCommandHistory();
-
-  interpretCommand(commandString);
+const executeCommand = async (command) => {
+  if (!command) return getCommandHistory();
+  const commandArr = command.split(" ");
+  await interpretCommand(commandArr.shift(), commandArr);
   return getCommandHistory();
 };
 
@@ -31,12 +32,21 @@ const COMMANDS = {
   ls() {
     return list();
   },
+  async cat(filename) {
+    const path = "/" + pwd() + `/${filename}`;
+    const text = await (await fetch(path)).text();
+    return <Cat content={text} />;
+  },
 };
 
-const interpretCommand = (commandString) => {
+const interpretCommand = async (commandString, args) => {
   if (typeof COMMANDS[commandString] === "function") {
-    const result = COMMANDS[commandString]();
-    if (result) pushCommandToHistory(commandString, renderResult(result));
+    const result = await COMMANDS[commandString](...args);
+    if (result)
+      pushCommandToHistory(
+        commandString + ` ${args.join(" ")}`,
+        renderResult(result)
+      );
   } else {
     pushCommandToHistory("command not found: " + commandString, null);
   }

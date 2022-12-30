@@ -39,7 +39,7 @@ export default function CommandLine() {
   };
 
   const handleCommandExecution = (commandString) => {
-    setCommandHistory(executeCommand(commandString));
+    executeCommand(commandString).then((history) => setCommandHistory(history));
     setInputString("");
   };
 
