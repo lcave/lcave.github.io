@@ -34,7 +34,14 @@ const COMMANDS = {
   },
   async cat(filename) {
     const path = "/" + pwd() + `/${filename}`;
-    const text = await (await fetch(path)).text();
+    let res;
+    try {
+      res = await fetch(path);
+    } catch (e) {
+      return "Failed to fetch file";
+    }
+    if (res.status === 404) return "No such file or directory";
+    const text = await res.text();
     return <Cat content={text} />;
   },
 };
