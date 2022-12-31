@@ -11,6 +11,7 @@ export default function Input({
   inputValue,
   changeInputValueCallback,
   executeCommandCallback,
+  arrowKeyPressCallback,
 }) {
   const handleKeyPress = (e) => {
     changeInputValueCallback(e.target.value);
@@ -21,6 +22,11 @@ export default function Input({
     executeCommandCallback(e.target.querySelector("input").value);
   };
 
+  const handleKeyDown = (e) => {
+    if (!e.key.includes("Arrow")) return;
+    arrowKeyPressCallback(e.key.replace("Arrow", "").toLowerCase());
+  };
+
   return (
     <form onSubmit={handleSubmit}>
       <InputElement
@@ -28,6 +34,7 @@ export default function Input({
         value={inputValue}
         onBlur={(e) => e.currentTarget.focus()}
         onChange={handleKeyPress}
+        onKeyDown={handleKeyDown}
       />
     </form>
   );

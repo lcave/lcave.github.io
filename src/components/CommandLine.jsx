@@ -4,6 +4,7 @@ import { executeCommand, getCommandHistory } from "../cli/commandInterpreter";
 import CommandHistory from "./CommandHistory";
 import Input from "./Input";
 import CommandTextRenderer from "./CommandTextRenderer";
+import { getLastCommand } from "../cli/qolHelper";
 
 const CLBorder = styled.div`
   border: 3px dashed green;
@@ -44,6 +45,13 @@ export default function CommandLine() {
     setInputString("");
   };
 
+  const handleArrowKeyPress = (direction) => {
+    if (["up", "down"].includes(direction)) {
+      const command = getLastCommand(direction, inputString, commandHistory);
+      setInputString(command);
+    }
+  };
+
   return (
     <>
       <MachineName>
@@ -54,6 +62,7 @@ export default function CommandLine() {
           inputValue={inputString}
           changeInputValueCallback={handleInputChange}
           executeCommandCallback={handleCommandExecution}
+          arrowKeyPressCallback={handleArrowKeyPress}
         />
         <CommandTextRenderer commandString={inputString} showCaret />
         <CommandHistory commandHistory={commandHistory} />
