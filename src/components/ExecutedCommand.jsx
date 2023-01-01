@@ -13,7 +13,7 @@ export default function ExecutedCommand({ commandString, result }) {
 
   useEffect(() => {
     liRef.current.querySelector(".result").innerHTML = result;
-  }, []);
+  }, [result]);
 
   return (
     <li ref={liRef}>
