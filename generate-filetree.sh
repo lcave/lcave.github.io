@@ -17,3 +17,5 @@ for path in "${ar[@]}"; do
 done
 
 echo "]}" >> src/cli/file-tree.json
+
+git add src/cli/file-tree.json
