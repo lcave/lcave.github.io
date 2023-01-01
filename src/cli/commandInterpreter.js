@@ -23,7 +23,16 @@ const getCommandHistory = () => {
   return JSON.parse(localStorage.getItem("commandHistory")) || [];
 };
 
-export { executeCommand, getCommandHistory, pushCommandToHistory };
+const availableCommands = () => {
+  return Object.keys(COMMANDS).sort();
+};
+
+export {
+  executeCommand,
+  getCommandHistory,
+  pushCommandToHistory,
+  availableCommands,
+};
 
 const COMMANDS = {
   clear() {

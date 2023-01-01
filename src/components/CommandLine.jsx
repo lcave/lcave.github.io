@@ -4,7 +4,8 @@ import { executeCommand, getCommandHistory } from "../cli/commandInterpreter";
 import CommandHistory from "./CommandHistory";
 import Input from "./Input";
 import CommandTextRenderer from "./CommandTextRenderer";
-import { getLastCommand } from "../cli/qolHelper";
+import { autocomplete, getLastCommand } from "../cli/qolHelper";
+import AutocompleteOptions from "./AutocompleteOptions";
 
 const CLBorder = styled.div`
   border: 3px dashed green;
@@ -31,6 +32,7 @@ const MachineName = styled.div`
 export default function CommandLine() {
   const [inputString, setInputString] = useState("");
   const [commandHistory, setCommandHistory] = useState([]);
+  const [autocompleteOptions, setAutocompleteOptions] = useState([]);
 
   useEffect(() => {
     setCommandHistory(getCommandHistory());
@@ -43,6 +45,7 @@ export default function CommandLine() {
   const handleCommandExecution = (commandString) => {
     executeCommand(commandString).then((history) => setCommandHistory(history));
     setInputString("");
+    setAutocompleteOptions([]);
   };
 
   const handleArrowKeyPress = (direction) => {
@@ -50,6 +53,15 @@ export default function CommandLine() {
       const command = getLastCommand(direction, inputString, commandHistory);
       setInputString(command);
     }
+  };
+
+  const handleRequestToAutocomplete = () => {
+    autocomplete(
+      inputString,
+      autocompleteOptions,
+      setInputString,
+      setAutocompleteOptions
+    );
   };
 
   return (
@@ -63,7 +75,9 @@ export default function CommandLine() {
           changeInputValueCallback={handleInputChange}
           executeCommandCallback={handleCommandExecution}
           arrowKeyPressCallback={handleArrowKeyPress}
+          tabKeyPressCallback={handleRequestToAutocomplete}
         />
+        <AutocompleteOptions options={autocompleteOptions} />
         <CommandTextRenderer commandString={inputString} showCaret />
         <CommandHistory commandHistory={commandHistory} />
       </CLBorder>

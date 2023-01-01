@@ -1,5 +1,11 @@
+import { availableCommands } from "./commandInterpreter";
+
+const getUniqueCommandStrings = (history) => {
+  return [...new Set(history.map((c) => c.commandString))];
+};
+
 const getLastCommand = (direction, currentCommandString, history) => {
-  const commandHistory = [...new Set(history.map((c) => c.commandString))];
+  const commandHistory = getUniqueCommandStrings(history);
   const indexOfCommand = commandHistory.findIndex(
     (c) => c === currentCommandString
   );
@@ -19,4 +25,29 @@ const getLastCommand = (direction, currentCommandString, history) => {
   }
 };
 
-export { getLastCommand };
+const autocomplete = (
+  currentCommandString,
+  currentOptions,
+  setInputStringCallback,
+  setAutocompleteOptionsCallback
+) => {
+  if (currentOptions.length > 0) {
+    let index = currentCommandString
+      ? currentOptions.indexOf(currentCommandString) + 1
+      : 0;
+    setInputStringCallback(currentOptions[index]);
+    return;
+  }
+
+  const matchingCommands = availableCommands().filter((c) =>
+    c.startsWith(currentCommandString)
+  );
+
+  if (matchingCommands.length === 1) {
+    setInputStringCallback(matchingCommands[0]);
+  } else if (matchingCommands.length > 0) {
+    setAutocompleteOptionsCallback(matchingCommands);
+  }
+};
+
+export { getLastCommand, autocomplete };

@@ -12,6 +12,7 @@ export default function Input({
   changeInputValueCallback,
   executeCommandCallback,
   arrowKeyPressCallback,
+  tabKeyPressCallback,
 }) {
   const handleKeyPress = (e) => {
     changeInputValueCallback(e.target.value);
@@ -23,8 +24,12 @@ export default function Input({
   };
 
   const handleKeyDown = (e) => {
-    if (!e.key.includes("Arrow")) return;
-    arrowKeyPressCallback(e.key.replace("Arrow", "").toLowerCase());
+    if (e.key.includes("Arrow")) {
+      arrowKeyPressCallback(e.key.replace("Arrow", "").toLowerCase());
+    } else if (e.key === "Tab") {
+      e.preventDefault();
+      tabKeyPressCallback();
+    }
   };
 
   return (
