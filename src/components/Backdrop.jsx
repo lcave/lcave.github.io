@@ -5,7 +5,7 @@ const Background = styled.div`
   background-color: black;
   height: 100vh;
   padding: 5% 5%;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   color: green;
   font-family: monospace;
 `;

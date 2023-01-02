@@ -10,7 +10,6 @@ const Result = styled.div`
 
 export default function ExecutedCommand({ commandString, result }) {
   const liRef = useRef(null);
-
   useEffect(() => {
     liRef.current.querySelector(".result").innerHTML = result;
   }, [result]);
