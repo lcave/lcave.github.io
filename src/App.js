@@ -1,6 +1,6 @@
 import Backdrop from "./components/Backdrop";
 import CommandLine from "./components/CommandLine";
-import "./App.css"
+import "./App.css";
 
 function App() {
   return (
