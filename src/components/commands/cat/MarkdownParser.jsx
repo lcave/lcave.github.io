@@ -8,54 +8,47 @@ const LINK_TEXT_REGEX = /\[((?!\()[^\)]+)\]/;
 
 const ITALICS_REGEX = /_([^_]*)_/g;
 
+const HEADING_REGEX = /#+([^\n]*)/g;
+
 export default function MarkdownParser({ content }) {
-  const contentArray = content.split("\n").filter((s) => s !== "");
-  let buffer = "";
+  let buffer = content;
 
-  contentArray.forEach((line, index) => {
-    // parse links
-    const links = Array.from(line.matchAll(LINK_REGEX));
-    links.forEach((l) => {
-      const regexMatch = l[0];
-      line = line.replace(
-        regexMatch,
-        renderToString(
-          createElement(
-            "a",
-            {
-              href: HREF_REGEX.exec(regexMatch)[1],
-              rel: "noopener noreferrer",
-            },
-            LINK_TEXT_REGEX.exec(regexMatch)[1]
-          )
-        )
-      );
-    });
-
-    // parse italics
-    const italics = Array.from(line.matchAll(ITALICS_REGEX));
-    italics.forEach((i) => {
-      line = line.replace(i[0], renderToString(createElement("em", {}, i[1])));
-    });
-
-    // parse headings
-    let startingHashes = /^#+/.exec(line);
-    if (startingHashes) {
-      const hType = startingHashes[0].length;
-      const lineWithoutHashes = line.replace(/^#+/, "");
-      line = renderToString(
+  // parse links
+  const links = Array.from(buffer.matchAll(LINK_REGEX));
+  links.forEach((l) => {
+    const regexMatch = l[0];
+    buffer = buffer.replace(
+      regexMatch,
+      renderToString(
         createElement(
-          `h${hType}`,
-          {},
-          <>
-            {lineWithoutHashes}
-            <br />
-            {"-".repeat(lineWithoutHashes.length)}
-          </>
+          "a",
+          {
+            href: HREF_REGEX.exec(regexMatch)[1],
+            rel: "noopener noreferrer",
+          },
+          LINK_TEXT_REGEX.exec(regexMatch)[1]
         )
-      );
-    }
-    buffer += line + (startingHashes ? "" : "<br>");
+      )
+    );
+  });
+
+  // parse italics
+  const italics = Array.from(buffer.matchAll(ITALICS_REGEX));
+  italics.forEach((i) => {
+    buffer = buffer.replace(
+      i[0],
+      renderToString(createElement("em", {}, i[1]))
+    );
+  });
+
+  // parse headings
+  const headings = Array.from(buffer.matchAll(HEADING_REGEX));
+  headings.forEach((h) => {
+    const startingHashes = /^#+/.exec(h[0]);
+    buffer = buffer.replace(
+      h[0],
+      renderToString(createElement(`h${startingHashes[0].length}`, {}, h[1]))
+    );
   });
 
   return <MarkdownRenderer content={buffer} />;
