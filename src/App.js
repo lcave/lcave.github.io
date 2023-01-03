@@ -1,13 +1,8 @@
-import Backdrop from "./components/Backdrop";
 import CommandLine from "./components/CommandLine";
 import "./App.css";
 
 function App() {
-  return (
-    <Backdrop>
-      <CommandLine />
-    </Backdrop>
-  );
+  return <CommandLine />;
 }
 
 export default App;

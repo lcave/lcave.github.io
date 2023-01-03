@@ -1,23 +1,6 @@
 import React, { createElement } from "react";
 import { renderToString } from "react-dom/server";
-import styled from "styled-components";
 import MarkdownRenderer from "./MarkdownRenderer";
-
-const MarkdownFile = styled.div`
-  & h2,
-  h3,
-  h4,
-  h5,
-  h5,
-  h6 {
-    margin-bottom: 0rem;
-  }
-  & h1 {
-    border-bottom: 3px solid green;
-    margin-bottom: 0rem;
-    display: inline-block;
-  }
-`;
 
 const LINK_REGEX = /(\[(?!\()[^\)]+\]\([^\[]+\))/g;
 const HREF_REGEX = /\(([^\[]+)\)/;
@@ -51,7 +34,7 @@ export default function MarkdownParser({ content }) {
             createElement(
               "div",
               {
-                className: "block-quote",
+                className: "block-quote secondary-text",
               },
               currentBlock.map((l) => l[1]).join("")
             )
@@ -113,8 +96,8 @@ export default function MarkdownParser({ content }) {
   buffer = buffer.replaceAll("\n\n", "<br>");
 
   return (
-    <MarkdownFile>
+    <div className="markdown-file">
       <MarkdownRenderer content={buffer} />
-    </MarkdownFile>
+    </div>
   );
 }

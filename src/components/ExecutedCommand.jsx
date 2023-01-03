@@ -6,6 +6,35 @@ import { faCaretRight } from "@fortawesome/free-solid-svg-icons";
 
 const Result = styled.div`
   padding-left: 10px;
+  & .markdown-file {
+    & h2,
+    h3,
+    h4,
+    h5,
+    h5,
+    h6 {
+      margin-bottom: 0rem;
+    }
+    a {
+      color: ${(props) => props.theme.linkTextColor};
+    }
+    & h1 {
+      border-bottom: 3px solid ${(props) => props.theme.borderColor};
+      margin-bottom: 0rem;
+      display: inline-block;
+    }
+    & .secondary-text {
+      color: ${(props) => props.theme.secondaryTextColor};
+    }
+    & .block-quote {
+      display: block;
+      margin-left: 1.5rem;
+      padding-left: 1rem;
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-left: 3px solid ${(props) => props.theme.borderColor};
+    }
+  }
 `;
 
 export default function ExecutedCommand({ commandString, result }) {

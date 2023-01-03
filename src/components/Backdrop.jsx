@@ -2,12 +2,12 @@ import React from "react";
 import styled from "styled-components";
 
 const Background = styled.div`
-  background-color: black;
+  background-color: ${(props) => props.theme.backgroundColor};
   height: 100vh;
   padding: 5% 5%;
   font-size: 1.3rem;
-  color: green;
-  font-family: monospace;
+  color: ${(props) => props.theme.mainTextColor};
+  font-family: ${(props) => props.theme.font || "monospace"};
 `;
 
 export default function Backdrop({ children }) {

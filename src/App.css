@@ -1,13 +1,3 @@
 * {
   box-sizing: border-box;
 }
-
-.block-quote {
-  display: block;
-  margin-left: 1.5rem;
-  padding-left: 1rem;
-  margin-top: 1.5rem;
-  margin-bottom: 1.5rem;
-  border-left: 3px solid green;
-  filter: hue-rotate(90deg);
-}

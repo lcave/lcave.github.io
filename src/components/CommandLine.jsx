@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
+import styled, { ThemeProvider } from "styled-components";
 import { executeCommand, getCommandHistory } from "../cli/commandInterpreter";
 import CommandHistory from "./CommandHistory";
 import Input from "./Input";
 import CommandTextRenderer from "./CommandTextRenderer";
 import { autocomplete, getLastCommand } from "../cli/qolHelper";
 import AutocompleteOptions from "./AutocompleteOptions";
+import Backdrop from "./Backdrop";
 
 const CLBorder = styled.div`
-  border: 3px dashed green;
+  border: 3px dashed ${(props) => props.theme.borderColor};
   height: 100%;
   display: flex;
   flex-direction: column-reverse;
-  padding: 5px 5px;
+  padding: 1rem;
   overflow-y: scroll;
   overflow-x: hidden;
 `;
@@ -65,22 +66,33 @@ export default function CommandLine() {
   };
 
   return (
-    <>
-      <MachineName>
-        <span>portfolio@Luca-Cave</span>
-      </MachineName>
-      <CLBorder>
-        <Input
-          inputValue={inputString}
-          changeInputValueCallback={handleInputChange}
-          executeCommandCallback={handleCommandExecution}
-          arrowKeyPressCallback={handleArrowKeyPress}
-          tabKeyPressCallback={handleRequestToAutocomplete}
-        />
-        <AutocompleteOptions options={autocompleteOptions} />
-        <CommandTextRenderer commandString={inputString} showCaret />
-        <CommandHistory commandHistory={commandHistory} />
-      </CLBorder>
-    </>
+    <ThemeProvider
+      theme={{
+        backgroundColor: "black",
+        mainTextColor: "dodgerblue",
+        secondaryTextColor: "deeppink",
+        linkTextColor: "deepskyblue",
+        borderColor: "deeppink",
+        font: "Source Code Pro",
+      }}
+    >
+      <Backdrop>
+        <MachineName>
+          <span>portfolio@Luca-Cave</span>
+        </MachineName>
+        <CLBorder>
+          <Input
+            inputValue={inputString}
+            changeInputValueCallback={handleInputChange}
+            executeCommandCallback={handleCommandExecution}
+            arrowKeyPressCallback={handleArrowKeyPress}
+            tabKeyPressCallback={handleRequestToAutocomplete}
+          />
+          <AutocompleteOptions options={autocompleteOptions} />
+          <CommandTextRenderer commandString={inputString} showCaret />
+          <CommandHistory commandHistory={commandHistory} />
+        </CLBorder>
+      </Backdrop>
+    </ThemeProvider>
   );
 }
