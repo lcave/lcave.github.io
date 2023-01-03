@@ -7,6 +7,8 @@ import CommandTextRenderer from "./CommandTextRenderer";
 import { autocomplete, getLastCommand } from "../cli/qolHelper";
 import AutocompleteOptions from "./AutocompleteOptions";
 import Backdrop from "./Backdrop";
+import { THEMES } from "./themes/themes";
+import { getUserPrefs } from "../cli/userPrefManager";
 
 const CLBorder = styled.div`
   border: 3px dashed ${(props) => props.theme.borderColor};
@@ -26,7 +28,7 @@ const MachineName = styled.div`
   overflow: visible;
   span {
     padding: 0 5px;
-    background-color: black;
+    background-color: ${(props) => props.theme.backgroundColor};
   }
 `;
 
@@ -34,6 +36,7 @@ export default function CommandLine() {
   const [inputString, setInputString] = useState("");
   const [commandHistory, setCommandHistory] = useState([]);
   const [autocompleteOptions, setAutocompleteOptions] = useState([]);
+  const [userPrefs, setUserPrefs] = useState(getUserPrefs());
 
   useEffect(() => {
     setCommandHistory(getCommandHistory());
@@ -45,6 +48,7 @@ export default function CommandLine() {
 
   const handleCommandExecution = (commandString) => {
     executeCommand(commandString).then((history) => setCommandHistory(history));
+    setUserPrefs(getUserPrefs());
     setInputString("");
     setAutocompleteOptions([]);
   };
@@ -66,16 +70,7 @@ export default function CommandLine() {
   };
 
   return (
-    <ThemeProvider
-      theme={{
-        backgroundColor: "black",
-        mainTextColor: "dodgerblue",
-        secondaryTextColor: "deeppink",
-        linkTextColor: "deepskyblue",
-        borderColor: "deeppink",
-        font: "Source Code Pro",
-      }}
-    >
+    <ThemeProvider theme={THEMES[userPrefs.theme]}>
       <Backdrop>
         <MachineName>
           <span>portfolio@Luca-Cave</span>

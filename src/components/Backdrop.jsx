@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const Background = styled.div`
-  background-color: ${(props) => props.theme.backgroundColor};
+  background: ${(props) => props.theme.backgroundColor};
   height: 100vh;
   padding: 5% 5%;
   font-size: 1.3rem;

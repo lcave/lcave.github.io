@@ -1,6 +1,7 @@
 import * as ReactDOMServer from "react-dom/server";
 import Cat from "../components/commands/Cat";
 import { list, pwd } from "./navigator";
+import { updateKey } from "./userPrefManager";
 
 const executeCommand = async (command) => {
   if (!command) return getCommandHistory();
@@ -52,6 +53,12 @@ const COMMANDS = {
     if (res.status === 404) return "No such file or directory";
     const text = await res.text();
     return <Cat content={text} />;
+  },
+  EXPORT(args) {
+    const varName = args.split("=")[0];
+    const val = args.split("=")[1];
+
+    return updateKey(varName, val);
   },
 };
 
