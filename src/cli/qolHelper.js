@@ -1,7 +1,11 @@
 import { availableCommands } from "./commandInterpreter";
 
 const getUniqueCommandStrings = (history) => {
-  return [...new Set(history.map((c) => c.commandString))];
+  return [
+    ...new Set(
+      history.map((c) => c.commandString.replace("command not found: ", ""))
+    ),
+  ];
 };
 
 const getLastCommand = (direction, currentCommandString, history) => {

@@ -45,7 +45,7 @@ export default function ExecutedCommand({ commandString, result }) {
 
   return (
     <li ref={liRef}>
-      <CommandTextRenderer commandString={commandString} />
+      <CommandTextRenderer>{commandString}</CommandTextRenderer>
 
       <Result className="result" />
       <FontAwesomeIcon icon={faCaretRight} fontSize="80%" />

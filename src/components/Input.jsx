@@ -1,10 +1,15 @@
 import React from "react";
 import styled from "styled-components";
+import CommandTextRenderer from "./CommandTextRenderer";
 
 const InputElement = styled.input`
-  caret-color: black;
-  opacity: 0;
-  position: absolute;
+  font-size: 1.3rem;
+  color: ${(props) => props.theme.mainTextColor};
+  caret-color: ${(props) => props.theme.mainTextColor};
+  font-family: ${(props) => props.theme.font || "monospace"};
+  background: none;
+  border: none;
+  outline: none;
 `;
 
 export default function Input({
@@ -34,13 +39,15 @@ export default function Input({
 
   return (
     <form onSubmit={handleSubmit}>
-      <InputElement
-        autoFocus
-        value={inputValue}
-        onBlur={(e) => e.currentTarget.focus()}
-        onChange={handleKeyPress}
-        onKeyDown={handleKeyDown}
-      />
+      <CommandTextRenderer>
+        <InputElement
+          autoFocus
+          value={inputValue}
+          onBlur={(e) => e.currentTarget.focus()}
+          onChange={handleKeyPress}
+          onKeyDown={handleKeyDown}
+        />
+      </CommandTextRenderer>
     </form>
   );
 }

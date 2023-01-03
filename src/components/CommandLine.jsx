@@ -3,7 +3,6 @@ import styled, { ThemeProvider } from "styled-components";
 import { executeCommand, getCommandHistory } from "../cli/commandInterpreter";
 import CommandHistory from "./CommandHistory";
 import Input from "./Input";
-import CommandTextRenderer from "./CommandTextRenderer";
 import { autocomplete, getLastCommand } from "../cli/qolHelper";
 import AutocompleteOptions from "./AutocompleteOptions";
 import Backdrop from "./Backdrop";
@@ -84,7 +83,6 @@ export default function CommandLine() {
             tabKeyPressCallback={handleRequestToAutocomplete}
           />
           <AutocompleteOptions options={autocompleteOptions} />
-          <CommandTextRenderer commandString={inputString} showCaret />
           <CommandHistory commandHistory={commandHistory} />
         </CLBorder>
       </Backdrop>

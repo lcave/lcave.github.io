@@ -14,10 +14,7 @@ const Context = styled.span`
   white-space: nowrap;
 `;
 
-export default function CommandTextRenderer({
-  commandString,
-  showCaret = false,
-}) {
+export default function CommandTextRenderer({ children }) {
   const context = pwd();
   return (
     <Command>
@@ -27,8 +24,7 @@ export default function CommandTextRenderer({
         <FontAwesomeIcon icon={faChevronRight} fontSize="80%" />
         &nbsp;
       </Context>
-      {commandString}
-      {showCaret && "█"}
+      {children}
     </Command>
   );
 }
