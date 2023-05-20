@@ -42,6 +42,8 @@ export default function Input({
       <CommandTextRenderer>
         <InputElement
           autoFocus
+          autoCapitalize="false"
+          autoComplete="false"
           value={inputValue}
           onBlur={(e) => e.currentTarget.focus()}
           onChange={handleKeyPress}
